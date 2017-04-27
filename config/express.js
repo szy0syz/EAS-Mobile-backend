@@ -1,3 +1,5 @@
+'use strict';
+
 import express from 'express';
 import router from '../routes/index.js';
 
@@ -18,3 +20,5 @@ router(app);
 app.use((err, req, res, next) => {
   res.send('找不到此路由');
 })
+
+export default app;
