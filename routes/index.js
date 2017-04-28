@@ -7,5 +7,5 @@ export default app => {
 	  res.send('123');
   });
   app.use('/home', home);
-  //app.use('/home',home);
+
 }
