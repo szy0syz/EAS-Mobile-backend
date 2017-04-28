@@ -4,7 +4,7 @@ import home from './home';
 
 export default app => { 
   app.get('/', (req, res, next) => {
-	  res.send('123');
+	  res.send('EAS Mobile backend...');
   });
   app.use('/home', home);
 
