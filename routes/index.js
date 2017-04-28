@@ -2,11 +2,10 @@
 
 import home from './home';
 
-export default app => {
-  
-  app.use('/', (req, res, next) => {
-	res.redirect('/home');
+export default app => { 
+  app.get('/', (req, res, next) => {
+	  res.send('123');
   });
-
+  app.use('/home', home);
   //app.use('/home',home);
 }
