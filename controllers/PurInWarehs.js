@@ -5,22 +5,11 @@ import BaseController from './baseController';
 import Sequelize from '../config/sequelize';
 import loadModel from '../utils/loadSequelizeModel'
 
-async function query(sql = '', conditions = '', modelName = '') {
-    const sequelize = Sequelize();
-    const PurInEntry = loadModel(sequelize, modelName);
-    const promise = sequelize.query(sql + conditions, {
-      type: sequelize.QueryTypes.SELECT,
-      model: PurInEntry
-    });
-    return promise;
+class PurInWarehsHandle extends BaseController {
+  constructor () {
+    super();
+    this.queryRes = this.queryRes.bind(this);
   }
-
-//extends BaseController
-class PurInWarehsHandle  {
-//   constructor () {
-//     super();
-//     //console.log(this)
-//   }
 
 
 
@@ -70,7 +59,7 @@ class PurInWarehsHandle  {
       WHERE ` ;
     let tt;
     try {
-      tt = await query(sql, req.queryConditions, 'PurInWarehs');
+      tt = await this.query(sql, req.queryConditions, 'PurInWarehs');
     } catch (error) {
         console.error(error)
         tt = '报错'
