@@ -2,6 +2,7 @@
 
 import express from 'express';
 import router from '../routes/index.js';
+import queryTranslate from '../middlewares/queryTranslate'
 
 const app = express();
 app.use(express.static('/public'));
@@ -15,6 +16,7 @@ app.all('*', (req, res, next) => {
   else  next();
 });
 
+app.use(queryTranslate.translate);
 router(app);
 
 app.use((err, req, res, next) => {
