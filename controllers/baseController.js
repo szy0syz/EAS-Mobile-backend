@@ -1,4 +1,3 @@
-'use strict';
 
 import Sequelize from '../config/sequelize';
 import loadModel from '../utils/loadSequelizeModel'
@@ -8,13 +7,13 @@ export default class BaseController {
 
   }
 
-  async query(sql = '', conditions = '', model = {}) {
+  async query(sql = '', conditions = '', modelName = '') {
     const sequelize = Sequelize();
-    const PurInEntry = loadModels(sequelize, 'PurInEntry');
-    const purInQuery = sequelize.query(sql + conditions, {
+    const PurInEntry = loadModel(sequelize, modelName);
+    const promise = sequelize.query(sql + conditions, {
       type: sequelize.QueryTypes.SELECT,
-      model: model
+      model: PurInEntry
     });
-    return query;
+    return promise;
   }
 }
