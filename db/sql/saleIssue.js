@@ -1,4 +1,4 @@
-export default 
+module.exports = 
 `SELECT top 10
                   sb.FID ,c.FName_L2 as FCustomer, pt.FName_L2 as FPaymentType,bu.FName_L2 as FStorageOrgUnit , bu4. FParentUnit AS FParentStorageOrgUnit, 
                   tt.FName_L2 as FTransactionType,sb.FAuditTime , u1.FName_L2 as FAuditor ,  

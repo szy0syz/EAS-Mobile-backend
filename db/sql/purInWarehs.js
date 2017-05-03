@@ -1,4 +1,4 @@
-export default 
+module.exports = 
 `SELECT top 100
             pe.FID AS FID, pe.FQty AS FQty, pe.FBaseQty AS FBaseQty, pe.FPrice AS FPrice, pe.FAmount AS FAmount,
             pe.FTaxPrice AS FTaxPrice, pe.FTaxAmount AS FTaxAmount, 

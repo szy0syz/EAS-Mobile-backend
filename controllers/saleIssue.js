@@ -14,9 +14,8 @@ class SaleIssueHandle extends BaseController {
     let metadata;
     try {
       //metadata = await this.baseQuery(sql, req.queryConditions, 'saleIssue');
-      metadata = await this.baseQuery(sql, '', 'saleIssue');
+      metadata = await this.baseQuery('', 'saleIssue');
     } catch (error) {
-        //promise的异常，手工加入日志。
         console.error(error);
         metadata = '报错';
         throw new Error(error);

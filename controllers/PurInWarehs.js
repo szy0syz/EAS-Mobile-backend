@@ -13,7 +13,7 @@ class PurInWarehsHandle extends BaseController {
   async query(req, res, next) {
     let metadata;
     try {
-      metadata = await this.baseQuery(sql, req.queryConditions, 'PurInWarehs');
+      metadata = await this.baseQuery(req.queryConditions, 'PurInWarehs');
     } catch (error) {
         //promise的异常，手工加入日志。
         console.error(error);
