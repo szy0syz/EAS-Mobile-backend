@@ -1,11 +1,14 @@
 'use strict';
 
-import express from 'express';
-import config from './index'
-import router from '../routes/index.js';
+import express        from 'express';
+import config         from './index'
+import router         from '../routes/index.js';
 import queryTranslate from '../middlewares/queryTranslate'
-import winston from 'winston';
+import winston        from 'winston';
 import expressWinston from 'express-winston';
+import session        from 'express-session';
+import connectMongo   from 'connect-mongo';
+import flash          from 'connect-flash';
 
 const app = express();
 app.use(express.static('/public'));
@@ -18,6 +21,20 @@ app.all('*', (req, res, next) => {
   if(req.method=="OPTIONS") res.send(200); /*让options请求快速返回*/
   else  next();
 });
+
+app.use(flash());
+const MongoStore = connectMongo(session);
+
+app.use(session({
+	name: config.session.name,
+  	secret: config.session.secret,
+  	resave: true,
+  	saveUninitialized: false,
+  	cookie: config.session.cookie,
+  	store: new MongoStore({
+    	url: config.mongoUrl
+  	})
+}))
 
 // app.use(expressWinston.logger({
 //     transports: [

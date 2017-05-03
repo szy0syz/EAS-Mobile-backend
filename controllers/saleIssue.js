@@ -2,7 +2,6 @@
 
 import express from 'express';
 import BaseController from './baseController';
-import sql from '../db/sql/saleIssue';
 
 class SaleIssueHandle extends BaseController {
   constructor () {

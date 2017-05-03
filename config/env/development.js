@@ -2,7 +2,7 @@
 
 module.exports = {
 	port: 8001,
-	mongoUrl: '',
+	mongoUrl: 'mongodb://EasMobileeee:g2E9Lk02xXk4@192.168.97.200:27017/EasMobile',
 	sqlseverUrl: 'mssql://szy0syz0yngf2017:xQnWdw3u4BOgwTuU@192.168.97.199:1433/YNNZ2011001',
 	sequelizeOptions: {
     dialectOptions: {

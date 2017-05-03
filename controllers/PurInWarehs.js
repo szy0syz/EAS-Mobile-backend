@@ -2,7 +2,6 @@
 
 import express from 'express';
 import BaseController from './baseController';
-import sql from '../db/sql/purInWarehs';
 
 class PurInWarehsHandle extends BaseController {
   constructor () {
