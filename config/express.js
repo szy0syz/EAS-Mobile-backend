@@ -1,8 +1,11 @@
 'use strict';
 
 import express from 'express';
+import config from './index'
 import router from '../routes/index.js';
 import queryTranslate from '../middlewares/queryTranslate'
+import winston from 'winston';
+import expressWinston from 'express-winston';
 
 const app = express();
 app.use(express.static('/public'));
@@ -16,8 +19,32 @@ app.all('*', (req, res, next) => {
   else  next();
 });
 
+app.use(expressWinston.logger({
+    transports: [
+        new (winston.transports.Console)({
+          json: true,
+          colorize: true
+        }),
+        new winston.transports.File({
+          filename: 'logs/success.log'
+        })
+    ]
+}));
+
 app.use(queryTranslate.translate);
 router(app);
+
+app.use(expressWinston.errorLogger({
+    transports: [
+        new winston.transports.Console({
+          json: true,
+          colorize: true
+        }),
+        new winston.transports.File({
+          filename: 'logs/error.log'
+        })
+    ]
+}));
 
 app.use((err, req, res, next) => {
   res.send('找不到此路由');
