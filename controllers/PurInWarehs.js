@@ -16,9 +16,9 @@ class PurInWarehsHandle extends BaseController {
       tt = await this.baseQuery(sql, req.queryConditions, 'PurInWarehs');
     } catch (error) {
         //promise的异常，手工加入日志。
-        console.error(error) 
-        tt = '报错'
-        throw new Error(error)
+        console.error(error);
+        tt = '报错';
+        throw new Error(error);
     }
     res.send(tt);
   }
