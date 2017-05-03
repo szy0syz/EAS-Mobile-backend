@@ -2,9 +2,9 @@
 
 import express from 'express';
 import BaseController from './baseController';
-import sql from '../db/sql/purInWarehs';
+import sql from '../db/sql/saleIssue';
 
-class PurInWarehsHandle extends BaseController {
+class SaleIssueHandle extends BaseController {
   constructor () {
     super();
     this.query = this.query.bind(this);
@@ -13,7 +13,8 @@ class PurInWarehsHandle extends BaseController {
   async query(req, res, next) {
     let metadata;
     try {
-      metadata = await this.baseQuery(sql, req.queryConditions, 'PurInWarehs');
+      //metadata = await this.baseQuery(sql, req.queryConditions, 'saleIssue');
+      metadata = await this.baseQuery(sql, '', 'saleIssue');
     } catch (error) {
         //promise的异常，手工加入日志。
         console.error(error);
@@ -24,4 +25,4 @@ class PurInWarehsHandle extends BaseController {
   }
 }
 
-export default new PurInWarehsHandle()
+export default new SaleIssueHandle()
