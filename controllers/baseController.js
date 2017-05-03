@@ -7,7 +7,7 @@ export default class BaseController {
 
   }
 
-  async query(sql = '', conditions = '', modelName = '') {
+  async baseQuery(sql = '', conditions = '', modelName = '') {
     const sequelize = Sequelize();
     const PurInEntry = loadModel(sequelize, modelName);
     const promise = sequelize.query(sql + conditions, {

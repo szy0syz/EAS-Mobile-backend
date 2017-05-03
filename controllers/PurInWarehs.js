@@ -2,20 +2,16 @@
 
 import express from 'express';
 import BaseController from './baseController';
-import Sequelize from '../config/sequelize';
-import loadModel from '../utils/loadSequelizeModel'
 
 class PurInWarehsHandle extends BaseController {
   constructor () {
     super();
-    this.queryRes = this.queryRes.bind(this);
+    this.query = this.query.bind(this);
   }
 
-
-
-  async queryRes(req, res, next) {
+  async query(req, res, next) {
     const sql = 
-      `SELECT top 10
+      `SELECT top 100
             pe.FID AS FID, pe.FQty AS FQty, pe.FBaseQty AS FBaseQty, pe.FPrice AS FPrice, pe.FAmount AS FAmount,
             pe.FTaxPrice AS FTaxPrice, pe.FTaxAmount AS FTaxAmount, 
             pe.FUnitActualCost AS FUnitActualCost, pe.FActualCost AS FActualCost, pe.FPurOrderNumber AS FPurOrderNumber, pe.FPurOrderID AS FPurOrderID, pe.FTax AS FTax, 
@@ -59,9 +55,10 @@ class PurInWarehsHandle extends BaseController {
       WHERE ` ;
     let tt;
     try {
-      tt = await this.query(sql, req.queryConditions, 'PurInWarehs');
+      tt = await this.baseQuery(sql, req.queryConditions, 'PurInWarehs');
     } catch (error) {
-        console.error(error)
+        //promise的异常，手工加入日志。
+        console.error(error) 
         tt = '报错'
         throw new Error(error)
     }

@@ -5,11 +5,8 @@ import PurInWarehs from '../../controllers/purInWarehs';
 
 const router = express.Router();
 
-// router.post('/', (req, res) => {
-// 	console.log(req.queryConditions);
-// 	res.json({a: 1111})
-// })
+router.post('/', PurInWarehs.query);
 
-router.get('/', PurInWarehs.queryRes);
+router.get('/', PurInWarehs.query);
 
 export default router;
