@@ -11,6 +11,14 @@
 
 做EAS维护那么久了，不搞点事情完全不能混饭吃，所以开发这个项目。
 
+## 项目说明
+
+> 由express为主构建的后台系统
+
+> 开发环境 macOS 10.12.3 & nodeJS 7.7.4
+
+> 技术菜，欢迎交流指点 ^_^
+
 ## 技术栈
 
 nodejs + express + mongodb + sqlserver + mongoose + sequelize + es6/7 + mocha + bluebird...
@@ -25,7 +33,7 @@ npm install
 
 ### 目标功能
 - [x]  采购入库单查询  -- 完成 :tada:
-- [ ]  销售出库单查询
+- [x]  销售出库单查询  -- 完成
 - [ ]  登录&注册
 - [ ]  权限管理（用户权限中间件）
 - [ ]  查询条件（查询条件中间件）
