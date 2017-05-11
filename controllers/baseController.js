@@ -6,6 +6,7 @@ import formidable from 'formidable'
 import Ids from '../models/ids'
 import path from 'path'
 import fs from 'fs'
+import gm from 'gm'
 
 export default class BaseController {
   constructor () {
@@ -39,10 +40,11 @@ export default class BaseController {
     }
   }
 
+  // '<form action="http://127.0.0.1:8001/user/upload" enctype="multipart/form-data" method="post">'
   async uploadImg(req, type = 'default') {
     return new Promise((resolve, reject) => {
-      const from = formidable.IncomingForm();
-      form.uploadDir = '../public/img' + type
+      const form = new formidable.IncomingForm();
+      form.uploadDir = './public/img/' + type;
       form.parse(req, async (err, fields, files) => {
         let imgId;
         try {
@@ -52,11 +54,11 @@ export default class BaseController {
           fs.unlink(files.file.path);
           reject(err);
         }
-        const imgUrl = new Date().getTime.toString() + imgId;
-        const extname = path.extname(files.file.name);
-        const repath = '../public/img/' + type + '/' + imgUrl + extname;
+        const imgUrl = new Date().getTime().toString() + imgId;
+        const extname = path.extname(files.upload.name);
+        const repath = './public/img/' + type + '/' + imgUrl + extname;
         try {
-          await fs.rename(files.file.path, repath);
+          await fs.rename(files.upload.path, repath);
           gm(repath)
             .resize(400, 400, '!')
             .write(repath, async (err) => {
@@ -65,12 +67,12 @@ export default class BaseController {
                 fs.unlink(repath);
                 reject(err);
               } else {
-                resolve(repath.replace(/^\.\/public/, '')); //替换路径中'/public'为空
+                resolve(repath.replace(/^\.\/public/, ''));
               }
             })
         } catch (err) {
           console.log('改写图片路径失败');
-          fs.unlink(files.file.path);
+          fs.unlink(files.upload.path);
           reject(err);
         }
       });
