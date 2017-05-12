@@ -8,7 +8,7 @@ class UserHandle extends BaseController {
   constructor () {
     super();
     this.addUser = this.addUser.bind(this);
-    this.uploadAvatar = this.uploadAvatar.bind(this); //将父类this传入子类
+    this.uploadAvatar = this.uploadAvatar.bind(this);
   }
 
   async uploadAvatar(req, res, next) {
