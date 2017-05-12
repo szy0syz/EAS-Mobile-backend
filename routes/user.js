@@ -10,9 +10,10 @@ router.get('/', (req, res) => {
 	res.json({name: '/user'})
 })
 
-// 上传接口
+// 上传头像接口
 router.post('/upload', User.uploadAvatar);
 
-router.post('/adduser', User.addUser);
+router.get('/adduser', User.regUserGet);
+router.post('/adduser', User.addUserPost);
 
 export default router

@@ -29,7 +29,7 @@ class UserHandle extends BaseController {
     }
   }
 
-  async addUser (req, res, next) {
+  async addUserPost (req, res, next) {
     let userId;
     try {
       userId = await this.getId('userId');
@@ -40,7 +40,7 @@ class UserHandle extends BaseController {
       })
       return;
     }
-    const form = new formidable.IncomingForm()
+    const form = new formidable.IncomingForm();
     form.parse(req, async (err, fields, files) => {
       try {
         if(!fields.loginName) throw new Error('必须填写用户名');
@@ -67,6 +67,12 @@ class UserHandle extends BaseController {
       res.send(newUser);
       return;
     });
+  }
+
+  // 注册用户的get请求，要查询SqlServer的数据。
+  async regUserGet (req, res, next) {
+    // 这里要么不用原始查询，直接用sequelize的orm查询吧。
+    // 首先得先用sequelize去sqlserver里同步一些表结构的model出来
   }
 }
 
