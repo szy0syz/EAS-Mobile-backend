@@ -51,7 +51,7 @@ export default class BaseController {
           imgId = await this.getId('imgId') // 从数据库从获取图片id流水号
         } catch (err) {
           console.log('获取图片id失败');
-          fs.unlink(files.file.path); // 如果失败解除文件链接
+          fs.unlink(files.upload.path); // 如果失败解除文件链接
           reject(err);
         }
         const imgUrl = new Date().getTime().toString() + imgId; // 文件的命为当前时间数字串
