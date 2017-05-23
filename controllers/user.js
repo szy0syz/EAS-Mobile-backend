@@ -33,6 +33,7 @@ class UserHandle extends BaseController {
   }
 
   async addUserPost (req, res, next) {
+    const cap = req.cookies.cap
     let userId;
     try {
       userId = await this.getId('userId');
@@ -41,34 +42,32 @@ class UserHandle extends BaseController {
         type: 'ERROR_DATA',
         message: '获取数据失败'
       })
-      return;
+      return
     }
     const form = new formidable.IncomingForm();
     form.parse(req, async (err, fields, files) => {
+      const { loginName, password, displayName, phoneNumber } = fields
       try {
-        if(!fields.loginName) throw new Error('必须填写用户名');
-        if(!fields.password) throw new Error('必须填写密码');
-        if(!fields.displayName) throw new Error('必须填写显示名称');
-        if(!fields.phoneNumber) throw new Error('必须填写电话号码')
-        if(!fields.defOrgId) throw new Error('默认组织不能为空');
+        if(!loginName) throw new Error('必须填写用户名');
+        if(!password) throw new Error('必须填写密码');
+        if(!displayName) throw new Error('必须填写显示名称');
+        if(!phoneNumber) throw new Error('必须填写电话号码')
       } catch (err) {
         res.send({
           type: 'ERROR_PARAMS',
           message: err.message
         })
-        return;
+        return
       }
+      const md5password = this.encryption(password)
       const newUser = {
-        loginName: fields.loginName,
-        password: fields.password,
-        displayName: fields.displayName,
-        phoneNumber: fields.phoneNumber,
-        defOrg: {}
+        loginName: loginName,
+        password: md5password,
+        displayName: displayName,
+        phoneNumber: phoneNumber
       }
-      newUser.defOrg.orgID = fields.defOrgId;
-      newUser.defOrg.orgName = fields.defOrgName;
       res.send(newUser);
-      return;
+      return
     });
   }
 
