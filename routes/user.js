@@ -22,5 +22,6 @@ router.get('/adduser', User.regUserGet)
 router.post('/adduser', User.addUserPost)
 
 router.post('/login', User.login)
+router.post('/changepassword', User.chanegPassword)
 
 export default router

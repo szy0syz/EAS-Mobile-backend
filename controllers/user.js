@@ -146,6 +146,93 @@ class UserHandle extends BaseController {
     // 首先得先用sequelize去sqlserver里同步一些表结构的model出来
   }
 
+  async signout (req, res, next) {
+    req.session.user = null
+    res.send({
+      status: 1,
+      message: '退出成功'
+    })
+  }
+
+  async changePassword (req, res, next) {
+    const cap = req.cookies.cap
+    if (!cap) {
+      res.send({
+				status: 0,
+				type: 'ERROR_CAPTCHA',
+				message: '验证码失效',
+			})
+			return
+    }
+    const form = new formidable.IncomingForm()
+    form.parse(req, async (err, fields, files) => {
+      const {loginName, oldpassword, newpassword, confirmpassword, captcha_code} = fields
+      try {
+        if (!loginName) {
+          throw new Error('用户名参数错误')
+        } else if (!oldpassword) {
+          throw new Error('必须添加旧密码')
+        } else if (!newpassword) {
+          throw new Error('必须填写新密码')
+        } else if(!confirmpassword){
+					throw new Error('必须填写确认密码');
+				}else if(newpassword !== confirmpassword){
+					throw new Error('两次密码不一致');
+				}else if(!captcha_code){
+					throw new Error('请填写验证码');
+				}
+      } catch (err) {
+        console.log('修改密码参数错误', err)
+        res.send({
+          status: 0,
+          type: 'ERROR_QUERY',
+          message: err.message
+        })
+        return
+      }
+      if (cap.toString() !== captcha_code.toString()) {
+        res.send({
+					status: 0,
+					type: 'ERROR_CAPTCHA',
+					message: '验证码不正确',
+				})
+				return
+      }
+      const md5password = this.encryption(oldpassword)
+      try {
+        const user = await UserModel.findOne({loginName})
+        if(!user) {
+          res.send({
+						status: 0,
+						type: 'USER_NOT_FOUND',
+						message: '未找到当前用户',
+					})
+        } else if(user.password.toString() !== md5password.toString()){
+					res.send({
+						status: 0,
+						type: 'ERROR_PASSWORD',
+						message: '密码不正确',
+					})
+        } else {
+          user.password = this.encryption(newpassword)
+          user.save()// 这里应该用flash提示修改成功后直接重定向到signout
+          res.send({
+						status: 1,
+						success: '密码修改成功',
+					})
+        }
+      } catch (err) {
+        console.log('修改密码失败', err);
+				res.send({
+					status: 0,
+					type: 'ERROR_CHANGE_PASSWORD',
+					message: '修改密码失败',
+				})
+      }
+    })
+
+  }
+
   encryption (password) { // salt，取md5中的7位和原md5合并生成md5新密码，方法要记得
     const newpassword = this.Md5(this.Md5(password).substr(2, 7) + this.Md5(password))
   }
