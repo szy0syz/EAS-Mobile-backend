@@ -69,10 +69,12 @@ export default class BaseController {
           const token = this.uptoken('project', key) // 换取服务器端tooken
           const qiniuImg = await this.uploadFile(token.toString(), key, repath) // key是预设的文件全名，repath是后端服务器上绝对路径
           fs.unlink(repath)
-          res.send({
-            status: 1,
-            image_path: qiniuImg // 如果七牛传成功了会返回文件外链地址
-          })
+          // res.send({
+          //   status: 1,
+          //   image_path: qiniuImg // 如果七牛传成功了会返回文件外链地址
+          // })
+          resolve(qiniuImg)
+
           // await fs.rename(files.upload.path, repath); // 按指定格式重命名上传文件
           // gm(repath) // 缩放图片尺寸
           //   .resize(400, 400, '!') // 限制大小
@@ -95,14 +97,14 @@ export default class BaseController {
   }
 
   uptoken (bucket, key) {
-    let putPolicy = new qiniu.re.PutPolicy(bucket + ':' + key) // 仓储名:key
+    let putPolicy = new qiniu.rs.PutPolicy(bucket + ':' + key) // 仓储名:key
     return putPolicy.token()
   }
 
   uploadFile (uptoken, key, localFile) {
     return new Promise((resolve, reject) => {
       let extra = new qiniu.io.PutExtra()
-      qiniu.io.putFile(upload, key, localFile, extra, function(err, ret) {
+      qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
         if(!err) {
           resolve(ret.key)
         } else {
