@@ -7,7 +7,7 @@ import BaseController from './baseController';
 class UserHandle extends BaseController {
   constructor () {
     super();
-    this.addUser = this.addUser.bind(this);
+    this.addUserPost = this.addUserPost.bind(this);
     this.uploadAvatar = this.uploadAvatar.bind(this);
   }
 
