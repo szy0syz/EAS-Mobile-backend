@@ -3,6 +3,7 @@
 import express        from 'express';
 import config         from './index'
 import router         from '../routes/index.js';
+import cookieParser   from 'cookie-parser'
 import queryTranslate from '../middlewares/queryTranslate'
 import winston        from 'winston';
 import expressWinston from 'express-winston';
@@ -23,9 +24,9 @@ app.all('*', (req, res, next) => {
   else  next();
 });
 
-app.use(flash());
-const MongoStore = connectMongo(session);
-
+app.use(flash())
+const MongoStore = connectMongo(session)
+app.use(cookieParser())
 app.use(session({
 	name: config.session.name,
   	secret: config.session.secret,

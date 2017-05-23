@@ -16,6 +16,7 @@ router.post('/upload', User.uploadAvatar);
 
 // 获取验证码
 router.post('/captchas', Captchas.getCaptchas);
+router.get('/captchas', Captchas.getCaptchas);
 
 router.get('/adduser', User.regUserGet);
 router.post('/adduser', User.addUserPost);
