@@ -2,6 +2,7 @@
 
 import home        from './home';
 import user        from './user'
+import admin       from './admin/index'
 import saleIssue   from './im/saleIssue'
 import purInWarehs from './im/purInWarehs'
 
@@ -11,6 +12,7 @@ export default app => {
   });
   app.use('/home', home);
   app.use('/user', user);
+  app.use('/admin', admin);
   app.use('/saleIssue', saleIssue);
   app.use('/purInWarehs', purInWarehs);
 }
