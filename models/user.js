@@ -20,8 +20,6 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-userSchema.index({ id: 1 });
+const User = mongoose.model('User', userSchema);
 
-const Users = mongoose.model('Users', userSchema);
-
-export default Users
+export default User

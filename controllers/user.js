@@ -3,6 +3,7 @@
 import crypto from 'crypto'
 import express from 'express'
 import formidable from 'formidable'
+import UserModel from '../models/user'
 import BaseController from './baseController'
 
 class UserHandle extends BaseController {
@@ -34,16 +35,16 @@ class UserHandle extends BaseController {
 
   async addUserPost (req, res, next) {
     const cap = req.cookies.cap
-    let userId;
-    try {
-      userId = await this.getId('userId');
-    } catch (err) {
-      res.send({
-        type: 'ERROR_DATA',
-        message: '获取数据失败'
-      })
-      return
-    }
+    // let userId;
+    // try {
+    //   userId = await this.getId('userId');
+    // } catch (err) {
+    //   res.send({
+    //     type: 'ERROR_DATA',
+    //     message: '获取数据失败'
+    //   })
+    //   return
+    // }
     const form = new formidable.IncomingForm();
     form.parse(req, async (err, fields, files) => {
       const { loginName, password, displayName, phoneNumber } = fields
@@ -66,7 +67,8 @@ class UserHandle extends BaseController {
         displayName: displayName,
         phoneNumber: phoneNumber
       }
-      res.send(newUser);
+      const createdUser = new UserModel(newUser)
+      res.send(await createdUser.save());
       return
     });
   }
@@ -102,8 +104,7 @@ class UserHandle extends BaseController {
         })
         return
       }
-      
-      if (cap.toString !== captcha_code.toString()) {
+      if (cap.toString() !== captcha_code.toString()) {
         res.send({
           status: 0,
           type: 'ERROR_CAPTCHA',
@@ -233,7 +234,7 @@ class UserHandle extends BaseController {
   }
 
   encryption (password) { // salt，取md5中的7位和原md5合并生成md5新密码，方法要记得
-    const newpassword = this.Md5(this.Md5(password).substr(2, 7) + this.Md5(password))
+    return this.Md5(this.Md5(password).substr(2, 7) + this.Md5(password))
   }
 
   Md5 (password) {
