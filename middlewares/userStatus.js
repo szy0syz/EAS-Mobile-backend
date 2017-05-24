@@ -16,16 +16,15 @@ class UserStatus {
   }
 
   checkLogin(req, res, next) {
-    console.log(eq.session.user)
-    if(!req.session.user) {
+    if (req.session.user) {
+      next()
+    } else {
       req.send({
         status: 0,
         type: 'NO_ACCESS',
         message: '拒绝访问'
       })
     }
-    // 如果有session就继续走路由
-    next()
   }
 }
 
