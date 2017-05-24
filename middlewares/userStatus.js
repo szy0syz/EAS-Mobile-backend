@@ -19,7 +19,7 @@ class UserStatus {
     if (req.session.user) {
       next()
     } else {
-      req.send({
+      res.status(403).send({
         status: 0,
         type: 'NO_ACCESS',
         message: '拒绝访问'
