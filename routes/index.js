@@ -5,6 +5,7 @@ import user        from './user'
 import User        from '../controllers/user'
 import Captchas    from '../controllers/captchas'
 import userStatus  from '../middlewares/userStatus'
+import baseUnit    from './org/baseUnit'
 import admin       from './admin/index'
 import saleIssue   from './im/saleIssue'
 import purInWarehs from './im/purInWarehs'
@@ -24,6 +25,7 @@ export default app => {
 
   app.use('/user', user)
   app.use('/admin', admin)
+  app.use('/org/baseUnit', baseUnit)
   app.use('/saleIssue', saleIssue)
   app.use('/purInWarehs', purInWarehs)
 }
