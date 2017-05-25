@@ -68,7 +68,11 @@ class UserHandle extends BaseController {
         phoneNumber: phoneNumber
       }
       const createdUser = new UserModel(newUser)
-      res.send(await createdUser.save());
+      createdUser = await createdUser.save()
+      res.send({
+        statue: 1,
+				message: '注册成功'
+      });
       return
     });
   }
@@ -131,10 +135,18 @@ class UserHandle extends BaseController {
         } else {
           req.session.user = user // 直接存整个user对象, 因为以后要合成查询过滤条件
           // 这里还需要构建一个前端专用的userInfo对象
-          res.send(user.loginName + ':登录成功') // 这里要改~
+          res.send({ // 这里要改~
+            statue: 1,
+				    message: '注册成功'
+          });
         }
       } catch (err) {
-
+        console.log('注册失败', err);
+				res.send({
+					status: 0,
+					type: 'SAVE_USER_FAILED',
+					message: '注册失败',
+				})
       }
 
     })
