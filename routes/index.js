@@ -20,8 +20,8 @@ export default app => {
   app.post('/captchas', Captchas.getCaptchas)
   app.get('/captchas', Captchas.getCaptchas)
 
-  //检查权限
-  app.use('/', userStatus.checkLogin)
+  // 检查权限
+  // app.use('/', userStatus.checkLogin)
 
   app.use('/user', user)
   app.use('/admin', admin)
