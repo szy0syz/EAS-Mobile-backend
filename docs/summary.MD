@@ -4,6 +4,8 @@
 
 - 文件上传formdata处理模块：[formidable](https://github.com/felixge/node-formidable)
 
+- 项目里如果有传递表单(fields)数据，还请用全能小助手[formidable](https://github.com/felixge/node-formidable)，不要用坑爹的`body-parser`
+
 ```javascript
 const form = new formidable.IncomingForm(); // 实例化子类
 form.uploadDir = './public/img/' + type; // 定义上传路径。注意：这里formidable是从node_modules来的，所以'./'所指的是整个程序的CWD。
