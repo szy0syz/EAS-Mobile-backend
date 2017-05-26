@@ -8,6 +8,15 @@ class QueryTranslate {
 
   translate(req, res, next) {
     //if(req.method !== 'POST') next(); //测试，暂时不处理。
+    const user = req.session.user
+    if (!user) {
+      res.send({
+        status:0,
+        type: 'Illegal Request',
+        message: '非法操作'
+      }) // 这里就不next，完成请求了
+    }
+
 
     //过滤采购入库单
     req.queryConditions = ` pe.FStorageOrgUnitID IS NOT NULL AND pb.FControlUnitID = 'a06viCxSRPSu0pa/lIWabcznrtQ='  AND mgp.FMaterialGroupStandard != '非化肥' AND pb.FBaseStatus = 4   AND pb.FCreateTime between N'2017-04-26' and N'2017-04-28'`;

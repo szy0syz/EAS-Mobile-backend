@@ -17,8 +17,12 @@ class BaseUnitHandle extends BaseController {
       json = await this.baseQuery(req.queryConditions, 'baseUnit')
     } catch (err) {
         console.error(error)
-        json = '报错'
-        throw new Error(error)
+        json = {
+          status: 0,
+          type: 'ERROR_DATA',
+          message: '获取数据失败'
+        }
+        return
     }
     res.send(json)
   }

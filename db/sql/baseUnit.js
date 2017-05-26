@@ -1,5 +1,5 @@
 module.exports =
-// 过滤所有直营店、过滤禁用、过滤封存组织
+// 只看本公司 过滤所有直营店、过滤禁用、过滤封存组织
   `
   select FID, FNumber, FName_L2 AS FName, FParentID, FLevel, FIsPurchaseOrgUnit, FIsSaleOrgUnit, FIsStorageOrgUnit, FDisplayName_L2 AS FDisplayName from T_ORG_BaseUnit 
 WHERE FControlUnitID = 'a06viCxSRPSu0pa/lIWabcznrtQ='
