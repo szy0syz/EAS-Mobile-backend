@@ -39,5 +39,4 @@ module.exports =
                         INNER JOIN dbo.T_BD_MaterialGroup AS mg ON mgd.FMaterialGroupID = mg.FID 
                         INNER JOIN dbo.T_BD_MaterialGroupStandard AS mgs ON mgd.FMaterialGroupStandardID = mgs.FID 
                         WHERE mgs.FID = 'rxeYrJ6RSpquKqs0T4Jhs5eb4R8='
-                  ) AS mgp1 ON mgp1.FMaterialID = pe.FMaterialID 
-      WHERE `
+                  ) AS mgp1 ON mgp1.FMaterialID = pe.FMaterialID `
