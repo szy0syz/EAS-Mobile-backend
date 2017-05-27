@@ -11,13 +11,14 @@ class QueryTranslate {
   translate(req, res, next) {
     //if(req.method !== 'POST') next(); //测试，暂时不处理。
     const user = req.session.user
-    if (!user) {
-      res.send({
-        status: 0,
-        type: 'Illegal Request',
-        message: '非法操作'
-      }) // 这里就不next，完成请求了
-    }
+
+    // if (!user) {
+    //   res.send({
+    //     status: 0,
+    //     type: 'Illegal Request',
+    //     message: '非法操作'
+    //   }) // 这里就不next，完成请求了
+    // }
 
     if (req.url == '/saleIssue') {
       req.queryConditions = ` se.FStorageOrgUnitID IS NOT NULL AND sb.FControlUnitID = 'a06viCxSRPSu0pa/lIWabcznrtQ='  AND mgp.FMaterialGroupStandard != '非化肥' AND sb.FBaseStatus = 4  AND sb.FBizDate between N'2017-05-01' and N'2017-05-25' `
@@ -51,8 +52,9 @@ class QueryTranslate {
         const { queryConditions } = fields;
         if (queryConditions) req.queryConditions = queryConditions
       })
-      next();
     }
+
+    next();
   }
 }
 

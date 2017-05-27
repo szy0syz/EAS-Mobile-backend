@@ -7,7 +7,7 @@ class SaleIssueHandle extends BaseController {
   constructor() {
     super();
     this.query = this.query.bind(this);
-  }ß
+  }
 
   async query(req, res, next) {
     let metadata;

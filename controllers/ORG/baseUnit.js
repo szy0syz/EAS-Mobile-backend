@@ -11,12 +11,12 @@ class BaseUnitHandle extends BaseController {
     this.getAll = this.getAll.bind(this)
   }
 
-  async getAll () {
+  async getAll (req, res, next) {
     let json
     try {
       json = await this.baseQuery(req.queryConditions, 'baseUnit')
     } catch (err) {
-        console.error(error)
+        console.error(err)
         json = {
           status: 0,
           type: 'ERROR_DATA',
